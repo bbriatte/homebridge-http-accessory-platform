@@ -1,0 +1,31 @@
+{
+  "name": "homebridge-http-accessory-platform",
+  "version": "1.0.0",
+  "description": "Homebridge HTTP accessory platform",
+  "main": "dist/index.js",
+  "types": "dist/index.d.js",
+  "keywords": [
+    "homebridge-plugin",
+    "http",
+    "switch",
+    "fan"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/bbriatte/homebridge-http-accessory-platform.git"
+  },
+  "engines": {
+    "homebridge": ">=1.0.0"
+  },
+  "author": "bbriatte",
+  "license": "BSD",
+  "dependencies": {
+    "axios": "^0.20.0",
+    "homebridge-base-platform": "^1.4.2"
+  },
+  "devDependencies": {
+    "@types/axios": "^0.14.0",
+    "@types/node": "^14.6.4",
+    "homebridge": "^1.1.6"
+  }
+}
