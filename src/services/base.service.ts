@@ -1,26 +1,16 @@
 import {Service} from 'homebridge';
-import {HomebridgeContextProxy} from "homebridge-base-platform/dist/context-proxy";
+import {HomebridgeContextProxy} from "homebridge-base-platform";
+import {BaseServiceConfig} from "../accessory-config";
 
-export enum ServiceType {
-    SWITCH = 'switch',
-    LIGHTBULB = 'lightbulb',
-    FAN = 'fan'
-}
+export type HttpServiceConstructor = { new (config: BaseServiceConfig, proxy: HomebridgeContextProxy, service: Service): BaseService };
 
-export interface BaseServiceProps {
-    readonly type: ServiceType;
-    readonly name?: string;
-}
-
-export abstract class BaseService implements BaseServiceProps {
-    readonly type: ServiceType;
-    readonly name?: string;
+export abstract class BaseService {
+    readonly config: BaseServiceConfig;
     readonly proxy: HomebridgeContextProxy;
     readonly service: Service;
 
-    protected constructor(props: BaseServiceProps, proxy: HomebridgeContextProxy, service: Service) {
-        this.type = props.type;
-        this.name = props.name;
+    protected constructor(config: BaseServiceConfig, proxy: HomebridgeContextProxy, service: Service) {
+        this.config = config;
         this.proxy = proxy;
         this.service = service;
     }

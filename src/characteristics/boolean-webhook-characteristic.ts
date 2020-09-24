@@ -1,14 +1,10 @@
-import {BaseWebhookCharacteristic, BaseWebhookCharacteristicProps} from "./base-webhook-characteristic";
+import {BaseWebhookCharacteristic} from "./base-webhook-characteristic";
 import {Characteristic} from 'homebridge';
 import axios from 'axios';
 import {callbackify} from "homebridge-base-platform";
+import {BooleanWebhook} from "../accessory-config";
 
-export interface BooleanWebhookCharacteristicProps extends BaseWebhookCharacteristicProps<boolean> {
-    readonly enableURL: string;
-    readonly disableURL?: string; // if different than activate
-}
-
-export class BooleanWebhookCharacteristic extends BaseWebhookCharacteristic<boolean> implements BooleanWebhookCharacteristicProps {
+export class BooleanWebhookCharacteristic extends BaseWebhookCharacteristic<boolean> {
     public readonly enableURL: string;
     public readonly disableURL?: string;
 
@@ -16,10 +12,10 @@ export class BooleanWebhookCharacteristic extends BaseWebhookCharacteristic<bool
         return raw == 1 || raw === 'true';
     }
 
-    public constructor(props: BooleanWebhookCharacteristicProps, characteristic: Characteristic) {
-        super(props, characteristic);
-        this.enableURL = props.enableURL;
-        this.disableURL = props.disableURL;
+    public constructor(webhook: BooleanWebhook, characteristic: Characteristic) {
+        super(webhook, characteristic);
+        this.enableURL = webhook.enableURL;
+        this.disableURL = webhook.disableURL;
         this.characteristic
             .on('get', callbackify(async () => {
                 const isOn = await this.getStatus();

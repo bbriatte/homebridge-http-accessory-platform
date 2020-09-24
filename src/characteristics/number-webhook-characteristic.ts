@@ -1,18 +1,9 @@
-import {BaseWebhookCharacteristic, BaseWebhookCharacteristicProps} from "./base-webhook-characteristic";
+import {BaseWebhookCharacteristic} from "./base-webhook-characteristic";
 import {Characteristic} from 'homebridge';
 import axios from 'axios';
+import {NumberWebhook, SetValueWebhook} from "../accessory-config";
 
-export interface SetValueWebhook<T> {
-    readonly setURL: string;
-    readonly value: T;
-}
-
-export interface NumberWebhookCharacteristicProps extends BaseWebhookCharacteristicProps<number> {
-    readonly defaultIndex: number;
-    readonly steps: SetValueWebhook<number>[];
-}
-
-export class NumberWebhookCharacteristic extends BaseWebhookCharacteristic<number> implements NumberWebhookCharacteristicProps {
+export class NumberWebhookCharacteristic extends BaseWebhookCharacteristic<number> {
     readonly defaultIndex: number;
     readonly steps: SetValueWebhook<number>[];
 
@@ -20,10 +11,10 @@ export class NumberWebhookCharacteristic extends BaseWebhookCharacteristic<numbe
         return 0;
     }
 
-    public constructor(props: NumberWebhookCharacteristicProps, characteristic: Characteristic) {
-        super(props, characteristic);
-        this.defaultIndex = props.defaultIndex;
-        this.steps = props.steps;
+    public constructor(webhook: NumberWebhook, characteristic: Characteristic) {
+        super(webhook, characteristic);
+        this.defaultIndex = webhook.defaultIndex;
+        this.steps = webhook.steps;
     }
 
     public async setStep(index: number): Promise<void> {

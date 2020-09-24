@@ -1,17 +1,14 @@
 import axios from 'axios';
 import {Characteristic} from 'homebridge';
+import {BaseWebhook} from "../accessory-config";
 
-export interface BaseWebhookCharacteristicProps<T> {
-    readonly statusURL?: string;
-}
-
-export abstract class BaseWebhookCharacteristic<T> implements BaseWebhookCharacteristicProps<T> {
+export abstract class BaseWebhookCharacteristic<T> {
     public readonly statusURL?: string;
     protected storeValue: T;
     public characteristic: Characteristic;
 
-    protected constructor(props: BaseWebhookCharacteristicProps<T>, characteristic: Characteristic) {
-        this.statusURL = props.statusURL;
+    protected constructor(webhook: BaseWebhook<T>, characteristic: Characteristic) {
+        this.statusURL = webhook.statusURL;
         this.characteristic = characteristic;
         this.storeValue = this.characteristic.getDefaultValue() as any;
     }

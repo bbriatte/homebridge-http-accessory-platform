@@ -1,20 +1,21 @@
 import {BaseGlobalConfig} from "homebridge-base-platform";
+import {HttpServiceType} from "./services";
 
 export interface GlobalConfig extends BaseGlobalConfig {
     readonly pollingInterval?: number;
 }
 
-export interface AccessoryConfig<S extends BaseService> extends GlobalConfig {
+export interface HttpAccessoryConfig extends GlobalConfig {
+    readonly name: string;
+    readonly serialNumber: string;
     readonly manufacturer?: string;
     readonly model?: string;
-    readonly serialNumber?: string;
     readonly firmwareRevision?: string;
-    readonly services: S[];
+    readonly services: BaseServiceConfig[];
 }
 
 export interface BaseWebhook<T> {
     readonly statusURL?: string;
-    readonly value: T
 }
 
 export interface BooleanWebhook extends BaseWebhook<boolean> {
@@ -32,25 +33,23 @@ export interface NumberWebhook extends BaseWebhook<number> {
     readonly steps: SetValueWebhook<number>[];
 }
 
-
-
-export interface BaseService {
-    readonly type: ServiceType;
+export interface BaseServiceConfig {
+    readonly type: HttpServiceType;
     readonly name?: string;
 }
 
-export interface SwitchService extends BaseService {
-    readonly on: BooleanWebhook;
+export interface SwitchServiceConfig extends BaseServiceConfig {
+    readonly on: BooleanWebhook | string;
 }
 
-export interface FanService extends BaseService {
-    readonly on: BooleanWebhook;
+export interface FanService extends BaseServiceConfig {
+    readonly on: BooleanWebhook | string;
     readonly rotationDirection?: NumberWebhook;
     readonly rotationSpeed?: NumberWebhook;
 }
 
-export interface LightbulbService extends BaseService {
-    readonly on: BooleanWebhook;
+export interface LightbulbService extends BaseServiceConfig {
+    readonly on: BooleanWebhook | string;
     readonly brightness?: NumberWebhook;
     readonly hue?: NumberWebhook;
     readonly saturation?: NumberWebhook;

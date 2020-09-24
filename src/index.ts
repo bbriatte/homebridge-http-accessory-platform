@@ -1,6 +1,6 @@
-import {CozytouchPlatform, CozytouchPlatformInfo} from './cozytouch-platform';
 import {API} from "homebridge";
+import {HttpAccessoryPlatform, HttpAccessoryPlatformInfo} from "./http-accessory-platform";
 
 export default function(homebridge: API) {
-    homebridge.registerPlatform(CozytouchPlatformInfo.plugin, CozytouchPlatformInfo.name, CozytouchPlatform);
+    homebridge.registerPlatform(HttpAccessoryPlatformInfo.plugin, HttpAccessoryPlatformInfo.name, HttpAccessoryPlatform);
 }

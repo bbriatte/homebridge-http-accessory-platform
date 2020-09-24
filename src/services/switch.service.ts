@@ -1,20 +1,19 @@
 import {Service} from 'homebridge';
-import {BaseService, BaseServiceProps} from "./base.service";
-import {BooleanWebhookCharacteristic, BooleanWebhookCharacteristicProps} from "../characteristics";
-import {HomebridgeContextProxy} from "homebridge-base-platform/dist/context-proxy";
+import {BaseService} from "./base.service";
+import {BooleanWebhookCharacteristic} from "../characteristics";
+import {HomebridgeContextProxy} from "homebridge-base-platform";
+import {BooleanWebhook, SwitchServiceConfig} from "../accessory-config";
 
-export interface SwitchServiceProps extends BaseServiceProps {
-    onWebhookCharacteristic: BooleanWebhookCharacteristicProps;
-}
-
-export class SwitchService extends BaseService implements SwitchServiceProps {
+export class HttpSwitchService extends BaseService {
 
     readonly onWebhookCharacteristic: BooleanWebhookCharacteristic;
 
-    public constructor(props: SwitchServiceProps, proxy: HomebridgeContextProxy, service: Service) {
-        super(props, proxy, service);
+    public constructor(config: SwitchServiceConfig, proxy: HomebridgeContextProxy, service: Service) {
+        super(config, proxy, service);
         this.onWebhookCharacteristic = new BooleanWebhookCharacteristic(
-            props.onWebhookCharacteristic,
+            typeof config.on === "string" ? {
+                enableURL: config.on
+            }: config.on as BooleanWebhook,
             service.getCharacteristic(this.proxy.Characteristic.On)
         )
     }
