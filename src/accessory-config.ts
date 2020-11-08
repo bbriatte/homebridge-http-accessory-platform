@@ -42,13 +42,13 @@ export interface SwitchServiceConfig extends BaseServiceConfig {
     readonly on: BooleanWebhook | string;
 }
 
-export interface FanService extends BaseServiceConfig {
+export interface FanServiceConfig extends BaseServiceConfig {
     readonly on: BooleanWebhook | string;
     readonly rotationDirection?: NumberWebhook;
     readonly rotationSpeed?: NumberWebhook;
 }
 
-export interface LightbulbService extends BaseServiceConfig {
+export interface LightbulbServiceConfig extends BaseServiceConfig {
     readonly on: BooleanWebhook | string;
     readonly brightness?: NumberWebhook;
     readonly hue?: NumberWebhook;

@@ -3,6 +3,9 @@ import {HomebridgeAccessoryWrapper, HomebridgeContextProps} from "homebridge-bas
 import {HttpDevice} from "./http-device";
 import {BaseService, HttpServiceConstructor, HttpServiceType, HttpSwitchService} from "./services";
 import {BaseServiceConfig} from "./accessory-config";
+import {HttpFanService} from "./services/fan.service";
+import {HttpLightbulbService} from "./services/lightbulb.service";
+
 
 export class HttpAccessoryWrapper extends HomebridgeAccessoryWrapper<HttpDevice> {
 
@@ -55,12 +58,24 @@ export class HttpAccessoryWrapper extends HomebridgeAccessoryWrapper<HttpDevice>
         if(config.type === HttpServiceType.SWITCH) {
             return this.Service.Switch;
         }
+        if(config.type === HttpServiceType.LIGHTBULB) {
+            return this.Service.Lightbulb;
+        }
+        if(config.type === HttpServiceType.FAN) {
+            return this.Service.Fan;
+        }
         return undefined;
     }
 
     private resolveHttpServiceConstructor(config: BaseServiceConfig): HttpServiceConstructor | undefined {
         if(config.type === HttpServiceType.SWITCH) {
             return HttpSwitchService;
+        }
+        if(config.type === HttpServiceType.LIGHTBULB) {
+            return HttpLightbulbService;
+        }
+        if(config.type === HttpServiceType.FAN) {
+            return HttpFanService;
         }
         return undefined;
     }

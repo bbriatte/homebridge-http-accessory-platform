@@ -8,7 +8,7 @@ export class NumberWebhookCharacteristic extends BaseWebhookCharacteristic<numbe
     readonly steps: SetValueWebhook<number>[];
 
     protected transformStatusResponse(raw: any): number {
-        return 0;
+        return Number.parseFloat(raw);
     }
 
     public constructor(webhook: NumberWebhook, characteristic: Characteristic) {
